@@ -182,6 +182,61 @@ namespace CompetitionJudo.UI
         }
         #endregion
 
+        #region Bouton ajouter competiteur check
+
+        //Enable ou disable le bouton d'ajout des compétiteurs
+        private void isButtonCompetiteurEnable()
+        {
+            if (texteNom != null &&
+                textePrenom != null &&
+                textePoids != null &&
+                listeClub != null &&
+                listeCategorie != null &&
+                barreSexe != null &&
+                boutonAjouterCompetiteur != null)
+            {
+                if (!String.IsNullOrWhiteSpace(texteNom.Text) &&
+                !String.IsNullOrWhiteSpace(textePrenom.Text) &&
+                !String.IsNullOrWhiteSpace(textePoids.Text) &&
+                !String.IsNullOrWhiteSpace(listeClub.Text) &&
+                !listeClub.Text.Equals("Club") &&
+                !String.IsNullOrWhiteSpace(listeCategorie.Text) &&
+                !listeCategorie.Text.Equals("Catégorie") &&
+                !listeCategorie.Text.Equals("Tous") &&
+                Convert.ToInt16(barreSexe.Value) != 1)
+                {
+                    boutonAjouterCompetiteur.IsEnabled = true;
+                }
+                else
+                {
+                    boutonAjouterCompetiteur.IsEnabled = false;
+                }
+            }
+        }
+
+
+        private void text_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            isButtonCompetiteurEnable();
+        }
+
+        private void barreSexe_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            isButtonCompetiteurEnable();
+        }
+
+        private void list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            isButtonCompetiteurEnable();
+        }
+
+        private void list_DropDownClosed(object sender, EventArgs e)
+        {
+            isButtonCompetiteurEnable();
+        }
+
+        #endregion
+
         #region Ajout nouveau Club
         /*
          * Ajoute le club courant à la liste des clubs si celui ci n'y est pas encore
@@ -480,6 +535,8 @@ namespace CompetitionJudo.UI
         }
         #endregion
 
+        #region nbw methods
+
         //Trier les compétiteurs présents par poids, catégorie et sexe et leur attribuer un numéro de poule
         private void boutonGenererPoules_Click(object sender, RoutedEventArgs e)
         {
@@ -691,6 +748,7 @@ namespace CompetitionJudo.UI
             fenetreStats.Show();
         }
 
+        //coche ou dechoche toutes les checkbox impression 
         private void CheckBoxImprimer_Click(object sender, RoutedEventArgs e)
         {
             bool etat = (bool)CheckBoxImprimer.IsChecked;
@@ -703,6 +761,7 @@ namespace CompetitionJudo.UI
             grilleCompetiteurs.Items.Refresh();
         }
 
+        //Ouvre la fenetre des parametres
         private void boutonParametres_Click(object sender, RoutedEventArgs e)
         {
             Action<NewDictionary<Categories, TimeSpan2>> actionUpdateTempsCombats = updateTempsDeCombat;
@@ -711,62 +770,9 @@ namespace CompetitionJudo.UI
             FenetreParametres fen = new FenetreParametres(actionUpdateTempsCombats, actionUpdateNbJudokas,donnee.tempsCombat,donnee.nombreParPoule);
             fen.Show();
 
-        }
+        }        
 
-        #region Bouton ajouter competiteur
-
-        //Enable ou disable le bouton d'ajout des compétiteurs
-        private void isButtonCompetiteurEnable()
-        {
-            if (texteNom != null &&
-                textePrenom != null &&
-                textePoids != null &&
-                listeClub != null &&
-                listeCategorie != null &&
-                barreSexe != null &&
-                boutonAjouterCompetiteur != null)
-            {
-                if (!String.IsNullOrWhiteSpace(texteNom.Text) &&
-                !String.IsNullOrWhiteSpace(textePrenom.Text) &&
-                !String.IsNullOrWhiteSpace(textePoids.Text) &&
-                !String.IsNullOrWhiteSpace(listeClub.Text) &&
-                !listeClub.Text.Equals("Club") &&
-                !String.IsNullOrWhiteSpace(listeCategorie.Text) &&
-                !listeCategorie.Text.Equals("Catégorie") &&
-                !listeCategorie.Text.Equals("Tous") &&
-                Convert.ToInt16(barreSexe.Value) != 1)
-                {
-                    boutonAjouterCompetiteur.IsEnabled = true;
-                }
-                else
-                {
-                    boutonAjouterCompetiteur.IsEnabled = false;
-                }
-            }
-        }
-
-        private void text_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            isButtonCompetiteurEnable();           
-        }
-
-        private void barreSexe_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            isButtonCompetiteurEnable();
-        }
-
-        private void list_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            isButtonCompetiteurEnable();
-        } 
-        
-        private void list_DropDownClosed(object sender, EventArgs e)
-        {
-            isButtonCompetiteurEnable();
-        }
-                
-        #endregion
-
+        //Windows closing
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             if (besoinEnregistrement)
@@ -788,11 +794,6 @@ namespace CompetitionJudo.UI
             }
         }
 
-        private void grilleCompetiteurs_CurrentCellChanged(object sender, EventArgs e)
-        {
-            Console.WriteLine("test");
-        }
-
-        
+        #endregion
     }
 }

@@ -131,7 +131,7 @@
         </StackPanel>
         <GroupBox Header="Groupes" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Right">
             <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <DataGrid CurrentCellChanged="grilleCompetiteurs_CurrentCellChanged" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" Margin="5,5,5,5" Name="grilleCompetiteurs" IsReadOnly="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True" CanUserReorderColumns="True" CanUserSortColumns="True">
+                <DataGrid IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" Margin="5,5,5,5" Name="grilleCompetiteurs" IsReadOnly="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True" CanUserReorderColumns="True" CanUserSortColumns="True">
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="{Binding Converter={StaticResource ColorationColonnes}}"/>
